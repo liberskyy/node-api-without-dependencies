@@ -1,19 +1,8 @@
-import { createServer } from "node:http";
-import { createRouter } from "./router.ts";
-import { registerRoutes } from "./routes/index.ts";
+import { createApp } from "./app.ts";
 
+// Only run this if this file is the main module (not imported)
 const PORT = parseInt(process.env.PORT) || 3000;
-
-// Initialize the router
-const router = createRouter();
-
-// Register bitcoin routes
-registerRoutes(router);
-
-// Create HTTP server
-const server = createServer((req, res) => {
-  router.handleRequest(req, res);
-});
+const { server, router } = createApp();
 
 // Start server
 server.listen(PORT, () => {
