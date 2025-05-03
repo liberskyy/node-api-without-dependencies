@@ -1,6 +1,7 @@
 import { Server, createServer } from "http";
-import { createRouter } from "./router";
-import { registerRoutes } from "./routes";
+import { registerRoutes } from "./routes/index.ts";
+import { createContextMiddleware } from "./middlewares/contextMilddleware.ts";
+import { createRouter } from "./router.ts";
 
 // Export a function to create and configure the server
 
@@ -10,6 +11,8 @@ export function createApp(): {
 } {
   // Initialize the router
   const router = createRouter();
+
+  router.use(createContextMiddleware());
 
   // Register bitcoin routes
   registerRoutes(router);

@@ -1,6 +1,6 @@
 import { IncomingMessage, ServerResponse } from "node:http";
 import {
-  fetchBitcoinRates,
+  getBitcoinRates,
   fetchBitcoinRatesByCurrency,
 } from "../services/bitcoinService.ts";
 import type { Router } from "../router.ts";
@@ -9,7 +9,7 @@ export function bitcoinRoutes(router: Router): void {
   router.get(
     "/v1/bitcoin/rate",
     async (_req: IncomingMessage, res: ServerResponse) => {
-      const rates = await fetchBitcoinRates();
+      const rates = await getBitcoinRates();
       res.statusCode = 200;
       res.end(JSON.stringify(rates));
     },
