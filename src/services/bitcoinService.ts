@@ -1,12 +1,19 @@
-interface CurrencyRate {
+import {
+  findAllBitcoinRates,
+  findBitcoinRatesBySymbol,
+  saveBitcoinRates,
+} from "../repositories/bitcoinRepository.ts";
+
+export interface CurrencyRate {
   "15m": number;
   last: number;
   buy: number;
   sell: number;
   symbol: string;
+  timestamp: number;
 }
 
-interface BitcoinRates {
+export interface BitcoinRates {
   [currency: string]: CurrencyRate;
 }
 
@@ -27,9 +34,32 @@ export async function fetchBitcoinRates(): Promise<BitcoinRates> {
   return (await response.json()) as BitcoinRates;
 }
 
-export async function fetchBitcoinRatesByCurrency(
+export async function getBitcoinRates(): Promise<CurrencyRate[]> {
+  const cachedRates = findAllBitcoinRates();
+  if (cachedRates.length) {
+    return cachedRates;
+  }
+
+  const fetchedRates = await fetchBitcoinRates();
+  if (!fetchedRates) {
+    throw new Error("Failed to fetch Bitcoin rates");
+  }
+
+  // Don't wait for the save to finish
+  // This is a fire-and-forget operation
+  saveBitcoinRates(fetchedRates);
+
+  return Object.values(fetchedRates);
+}
+
+export async function getBitcoinRatesByCurrency(
   currency: string,
 ): Promise<CurrencyRate | null> {
-  const rates = await fetchBitcoinRates();
-  return rates[currency] || null;
+  const cachedRate = findBitcoinRatesBySymbol(currency);
+  if (cachedRate) {
+    return cachedRate;
+  }
+
+  const rates = await getBitcoinRates();
+  return rates.find((rate) => rate.symbol === currency) || null;
 }
