@@ -1,6 +1,6 @@
 import { DatabaseSync } from "node:sqlite";
 import type { BitcoinRates, CurrencyRate } from "../services/bitcoinService.ts";
-import { getContext } from "../middlewares/contextMilddleware.ts";
+import { getContext } from "../middlewares/contextMiddleware.ts";
 
 const database = new DatabaseSync(":memory:");
 

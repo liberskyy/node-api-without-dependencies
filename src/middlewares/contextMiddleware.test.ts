@@ -4,8 +4,8 @@ import {
   createContextMiddleware,
   getContext,
   asyncLocalStorage,
-} from "./contextMilddleware.ts";
-import type { RequestContext } from "./contextMilddleware.ts";
+} from "./contextMiddleware.ts";
+import type { RequestContext } from "./contextMiddleware.ts";
 import { IncomingMessage, ServerResponse } from "node:http";
 
 describe("Context Middleware", () => {

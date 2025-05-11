@@ -61,5 +61,5 @@ export async function getBitcoinRatesByCurrency(
   }
 
   const rates = await getBitcoinRates();
-  return rates[currency] || null;
+  return rates.find((rate) => rate.symbol === currency) || null;
 }

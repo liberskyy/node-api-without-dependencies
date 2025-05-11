@@ -6,7 +6,7 @@ import {
 } from "./bitcoinService.ts";
 import assert from "assert/strict";
 import * as bitcoinRepository from "../repositories/bitcoinRepository.ts";
-import { asyncLocalStorage } from "../middlewares/contextMilddleware.ts";
+import { asyncLocalStorage } from "../middlewares/contextMiddleware.ts";
 
 describe("Bitcoin Service", () => {
   beforeEach(() => {
