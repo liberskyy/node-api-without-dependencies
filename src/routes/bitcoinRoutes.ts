@@ -1,13 +1,13 @@
 import { IncomingMessage, ServerResponse } from "node:http";
 import {
   getBitcoinRates,
-  fetchBitcoinRatesByCurrency,
+  getBitcoinRatesByCurrency,
 } from "../services/bitcoinService.ts";
 import type { Router } from "../router.ts";
 
 export function bitcoinRoutes(router: Router): void {
   router.get(
-    "/v1/bitcoin/rate",
+    "/v1/bitcoin/rates",
     async (_req: IncomingMessage, res: ServerResponse) => {
       const rates = await getBitcoinRates();
       res.statusCode = 200;
@@ -15,7 +15,7 @@ export function bitcoinRoutes(router: Router): void {
     },
   );
 
-  router.get(`/v1/bitcoin/rate/:currency`, async (req, res, params) => {
+  router.get(`/v1/bitcoin/rates/:currency`, async (req, res, params) => {
     const currency = params.currency as string;
     if (!currency) {
       res.statusCode = 400;
@@ -23,7 +23,7 @@ export function bitcoinRoutes(router: Router): void {
       return;
     }
 
-    const rates = await fetchBitcoinRatesByCurrency(currency);
+    const rates = await getBitcoinRatesByCurrency(currency);
     if (!rates) {
       res.statusCode = 404;
       res.end(JSON.stringify({ error: "Currency not found" }));

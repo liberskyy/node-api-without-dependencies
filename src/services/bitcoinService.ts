@@ -10,6 +10,7 @@ export interface CurrencyRate {
   buy: number;
   sell: number;
   symbol: string;
+  timestamp: number;
 }
 
 export interface BitcoinRates {
@@ -19,7 +20,6 @@ export interface BitcoinRates {
 const BITCOIN_TICKER_URL = process.env.BITCOIN_TICKER_URL;
 
 export async function fetchBitcoinRates(): Promise<BitcoinRates> {
-  console.log("Fetching Bitcoin rates from API...");
   const response = await fetch(BITCOIN_TICKER_URL, {
     method: "GET",
     headers: {
@@ -37,7 +37,6 @@ export async function fetchBitcoinRates(): Promise<BitcoinRates> {
 export async function getBitcoinRates(): Promise<CurrencyRate[]> {
   const cachedRates = findAllBitcoinRates();
   if (cachedRates.length) {
-    console.log(`Found ${cachedRates.length} cached Bitcoin rates`);
     return cachedRates;
   }
 
@@ -53,12 +52,11 @@ export async function getBitcoinRates(): Promise<CurrencyRate[]> {
   return Object.values(fetchedRates);
 }
 
-export async function fetchBitcoinRatesByCurrency(
+export async function getBitcoinRatesByCurrency(
   currency: string,
 ): Promise<CurrencyRate | null> {
   const cachedRate = findBitcoinRatesBySymbol(currency);
   if (cachedRate) {
-    console.log(`Found cached Bitcoin rate for ${currency}`);
     return cachedRate;
   }
 

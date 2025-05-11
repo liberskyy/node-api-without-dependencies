@@ -47,8 +47,6 @@ export function saveBitcoinRates(rates: BitcoinRates): Promise<number> {
 
     const result = stmt.run(...values);
 
-    console.log("Inserted/Updated rows:", result.changes);
-
     resolve(result.changes as number);
   });
 }
@@ -73,7 +71,7 @@ export function findAllBitcoinRates(): CurrencyRate[] {
 
 export function findBitcoinRatesBySymbol(symbol: string): CurrencyRate | null {
   const query = database.prepare(
-    `SELECT symbol, last, buy, sell, "15m" FROM ${BITCOIN_RATES_TABLE} WHERE symbol = ?`,
+    `SELECT symbol, last, buy, sell, "15m", timestamp FROM ${BITCOIN_RATES_TABLE} WHERE symbol = ?`,
   );
 
   // Can't pass the expected type to the query

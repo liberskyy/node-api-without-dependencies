@@ -4,7 +4,6 @@ import { createContextMiddleware } from "./middlewares/contextMilddleware.ts";
 import { createRouter } from "./router.ts";
 
 // Export a function to create and configure the server
-
 export function createApp(): {
   server: Server;
   router: ReturnType<typeof createRouter>;
