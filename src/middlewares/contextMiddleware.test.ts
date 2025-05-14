@@ -1,4 +1,4 @@
-import { describe, test, beforeEach, mock, afterEach } from "node:test";
+import { describe, test, mock, afterEach } from "node:test";
 import assert from "assert/strict";
 import {
   createContextMiddleware,
@@ -9,17 +9,6 @@ import type { RequestContext } from "./contextMiddleware.ts";
 import { IncomingMessage, ServerResponse } from "node:http";
 
 describe("Context Middleware", () => {
-  beforeEach(() => {
-    // Reset mocks if any were used with node:test's mock API
-    mock.reset();
-
-    // Ensure context is clear before each test
-    if (asyncLocalStorage.getStore()) {
-      // This scenario shouldn't happen if tests are isolated, but as a safeguard
-      asyncLocalStorage.disable();
-    }
-  });
-
   afterEach(() => {
     // Ensure context is cleared after test runs
     if (asyncLocalStorage.getStore()) {

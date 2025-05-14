@@ -15,7 +15,7 @@ describe("Bitcoin Service", () => {
   });
 
   afterEach(() => {
-    // Ensure context is cleared after test runs
+    // Ensure context is cleared after every test
     if (asyncLocalStorage.getStore()) {
       asyncLocalStorage.disable();
     }
