@@ -9,11 +9,6 @@ import * as bitcoinRepository from "../repositories/bitcoinRepository.ts";
 import { asyncLocalStorage } from "../middlewares/contextMiddleware.ts";
 
 describe("Bitcoin Service", () => {
-  beforeEach(() => {
-    mock.reset();
-    mock.restoreAll();
-  });
-
   afterEach(() => {
     // Ensure context is cleared after every test
     if (asyncLocalStorage.getStore()) {
